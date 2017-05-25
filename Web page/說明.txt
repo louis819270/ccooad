@@ -6,6 +6,7 @@ Sign up : 註冊頁面
 
 Item page : 商品頁面
 
+Calc BMI : 計算BMI
 
 
 
