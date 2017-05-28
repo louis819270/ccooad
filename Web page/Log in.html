@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <title>CCLAB的小朋友真棒</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -109,7 +110,11 @@
      <a href="#使用者登入成功，則導向至Main">
       <button type="submit" class="btn btn-default">登入</button>
                                  <!-- ...傳送#(form)資料 ... -->
-                                <!-- ... 使用者登入失敗 ... -->
+                                 <div class="alert">
+                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                               帳號或密碼錯誤
+                                </div>
+                                <!-- ... 使用者登入失敗，顯示上面的Alert ... -->
                                 <!-- ... 使用者登入成功，則導向至Main ... -->
                                 </a>
     </div>

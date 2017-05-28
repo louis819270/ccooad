@@ -12,6 +12,7 @@
     <title>CCLAB的小朋友真棒</title>
 
     <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet"
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
@@ -128,13 +129,17 @@
             <h3><span class="label label-warning"> #<點數餘額></span></h3>
 
             <a href="#(payment page)" >
-                <button type="botton" class="btn btn-default">結帳
+                <button type="botton" class="btn btn-default">結帳</button>
 
                                  <!-- ...傳送#(form)資料 ... -->
-                                <!-- ... 使用者剩餘點數足夠與否 ... -->
-                                <!-- ... 足夠支付，則完成 ... -->
 
-                </button>
+                                <div class="alert">
+                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                               餘額不足
+                                </div>
+                                <!-- ... 使用者剩餘點數足夠與否，若不足則顯示上面的alert ... -->
+                                <!-- ... 足夠支付，則完成 ... -->
+                
                 </a>
             </div>
         </div>

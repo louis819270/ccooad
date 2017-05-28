@@ -75,16 +75,31 @@
         <!-- Portfolio Item Heading -->
     <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">身體質量指數(BMI)小小算盤
+                <h1 class="page-header">基礎代謝率(TDEE)小小算盤
                     
                 </h1>
             </div>
         </div>
         <form class="form-horizontal" role="form">
-  <div class="form-group">
-    <label for="inputHeight" class="col-sm-2 control-label">身高(m)</label>
+  
+<div class="form-group">
+    <label for="inputGender" class="col-sm-2 control-label">性別</label>
+                        <select class="form-control">
+                            <option>男生</option>
+                            <option>女生</option>
+                        </select>
+  </div>
+
+ <div class="form-group">
+    <label for="inpuAge" class="col-sm-2 control-label">年齡</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="inputHeight" placeholder="1.82">
+      <input type="number" class="form-control" id="inputAge" >
+                              <!-- ... 使用者輸入#(年齡) ... -->
+
+  <div class="form-group">
+    <label for="inputHeight" class="col-sm-2 control-label">身高(cm)</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="inputHeight" placeholder="182">
                               <!-- ... 使用者輸入#(身高) ... -->
     </div>
   </div>
@@ -95,6 +110,31 @@
                                <!-- ... 使用者輸入#(體重) ... -->
     </div>
   </div>
+
+<div class="form-group">
+    <label for="inputWeekly" class="col-sm-2 control-label">每周運動次數</label>
+                        <select class="form-control">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+  </div>
+
+<div class="form-group">
+    <label for="inputQuestion" class="col-sm-2 control-label">從事勞力工作?</label>
+                        <select class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+  </div>
+
+
+
+
+
   
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
@@ -104,7 +144,7 @@
     </div>
     <br>
   <div class="form-group">
-    <label for="outputResult" class="col-sm-2 control-label"> #<BMI結果> </label>
+    <label for="outputResult" class="col-sm-2 control-label"> #<TDEE結果> </label>
                                  <!-- ...回傳Result資料 ... -->
   </div>
 </form>
@@ -134,3 +174,11 @@
 </body>
 
 </html>
+                   <label class="col-sm-2 control-label">選擇數量</label>
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
