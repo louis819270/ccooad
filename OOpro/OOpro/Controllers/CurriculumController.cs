@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-// TODO HTML未完成  需要使用資料庫 model 有3種  觀看 編輯 管理員編輯(待議)
+// TODO HTML未完成 靜態或動態網頁
 
 namespace OOpro.Controllers
 {
-    public class MemberPostController : Controller
+    public class CurriculumController : Controller
     {
         // GET: MemberPost
         public ActionResult Index()
