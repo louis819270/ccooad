@@ -21,7 +21,7 @@ namespace OOpro.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("OOproEntities", throwIfV1Schema: false)
         {
         }
 
@@ -29,5 +29,7 @@ namespace OOpro.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<OOpro.Models.Article> Article { get; set; }
     }
 }
