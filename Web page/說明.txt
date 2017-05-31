@@ -20,6 +20,8 @@ Deposit page : 儲值/抽點數
 
 Training menu : 訓練清單
 
+Review : 評論
+
 Calc BMI : 計算BMI
 
 Calc TDEE : 計算TDEE
