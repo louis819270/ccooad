@@ -6,12 +6,27 @@ Sign up : 註冊頁面
 
 Item page : 商品頁面
 
+Shopping cart : 購物車
+
+Order managerment : 訂單管理
+Order managerment for admin : 訂單管理(後台)
+
+Member managerment : 會員管理
+Member managerment for asmin: 會員管理(後台)
+
+Payment page : 付款頁面
+
+Deposit page : 儲值/抽點數
+
+Training menu : 訓練清單
+
+Review : 評論
+
 Calc BMI : 計算BMI
 
+Calc TDEE : 計算TDEE
 
-
-
-
+------------------
 
 * 若註解為 #<...> 則表示要接收參數
 

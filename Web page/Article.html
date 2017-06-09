@@ -44,8 +44,14 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#<網頁導向選擇>">點數儲值</a>
+                        <!-- ... 如果使用者未登入則導向至Log in ... -->
+                        <!-- ... 如果使用者已登入則導向至Deposit page ... -->
+                    </li>
 
                     <li>
+
                         <a href="#<網頁導向選擇>">購物車</a>
                         <!-- ... 如果使用者未登入則導向至Log in ... -->
                         <!-- ... 如果使用者已登入則導向至Shopping cart ... -->
@@ -55,10 +61,16 @@
                         <!-- ... 如果未完成登入則顯示"登入" ... -->
                         <!-- ... 如果已完成登入則顯示"會員管理" ... -->
                     </li>
-                    <li>                     
-                        <a href="#">點數餘額 : #<點數> </a>
-
+                    <li>                   
+                        <a href="#">點數餘額 : #<點數> </a>    
+                        </a> 
                     </li>
+                     <li>                   
+                        <a href="#">登出 </a> 
+                        <!-- ... 如果已完成登入才顯示 ... -->   
+                        </a> 
+                        <li>                   
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -68,128 +80,47 @@
 
     <!-- Page Content -->
     <div class="container">
+
     <div class="row">
             <div class="col-lg-12">
+            
                 <h1 class="page-header">
-                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                精選商品
+                <span class="glyphicon glyphicon-align-justify glyphicon" aria-hidden="true"></span>
+                文章
                     
                 </h1>
             </div>
         </div>
 
-    <div class="row">
-        <div class="col-md-12">
-           
-              <h3>  #<商品名字></h3>
-            
-            <img alt="#" src="#<商品圖片>" /> 
-            <br>
-            <br>
+        <!-- Portfolio Item Heading -->
 
-            <br>
-            <form role="form">
-                <div class="form-group">
-                <div class ="input-group">
-                    <label class="col-sm-2 control-label">選擇數量</label>
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                        </div>
-                </div>
-
-            <button type="submit" class="btn btn-default">
-                加入購物車
-                #(將商品加入到購物車)                 
-            </button>          
-
-            </form>
-                                <!-- ...傳送#(form)資料 ... -->
-            <br>
-             <span class="label label-info"> #<評價> </span>
-            <p>
-            <p>
-            <dl>
-                 #<商品描述>
-            </dl>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <img alt="#" src="#<隨機商品1 圖片>" />
-                        <div class="caption">
-                            <h3>
-                                #<隨機商品1 名字>
-                            </h3>
-
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <img alt="#" src="#<隨機商品2 圖片>" />
-                        <div class="caption">
-                            <h3>
-                                #<隨機商品2 名字>
-                            </h3>
-
-                           
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <img alt="#" src="#<隨機商品3 圖片>" />
-                        <div class="caption">
-                            <h3>
-                                #<隨機商品3 名字>
-                            </h3>
-
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-        <!-- /.row -->
-
-        <hr>
-
-
-                                <!-- ...一筆Rewiew的區間 ... -->
-     <div class="col-md-12">
-           
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-1">
-                    <img alt="#" src="#<會員頭貼>" />
+                    <img alt="#" src="#<作者(會員)大頭貼>" />
                 </div>
                 <div class="col-md-11">
-                    <h4>
-                        #<會員ID>
-                    </h4>
-                    <p>
-                        #<會員文字Review>
-                    </p>
-
+                    <h3>
+                        #<作者(會員)標題>
+                    </h3>
                 </div>
             </div>
+            <p>
+                #<作者(會員)文章>
+            </p>
+
         </div>
     </div>
 </div>
 
+
+
+
+        <!-- /.row -->
+
         <hr>
-
-                                <!-- ...一筆Rewiew的區間 ... -->
-
-                                <!-- ...loop ... -->
 
         <!-- Footer -->
         <footer>

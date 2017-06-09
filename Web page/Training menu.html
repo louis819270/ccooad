@@ -10,7 +10,6 @@
     <meta name="author" content="">
 
     <title>CCLAB的小朋友真棒</title>
-    <link href="css/mystyle.css" rel="stylesheet">
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -47,12 +46,22 @@
                 <ul class="nav navbar-nav">
 
                     <li>
-                        <a href="導向至Log in">#<文字顯示選擇></a>
-                        <!-- ... 如果未完成登入則顯示"登入" ... -->
-                        <!-- ... 如果已完成登入則顯示"會員管理" ... -->
+                        <a href="導向至Calc TDEE">輕鬆計算TDEE</a>
+                    </li>   
+                    <li>
+                        <a href="導向至Calc BMI">輕鬆計算BMI</a>
                     </li>
 
-
+                    <li>
+                        <a href="#<網頁導向選擇>">購物車</a>
+                        <!-- ... 如果使用者未登入則導向至Log in ... -->
+                        <!-- ... 如果使用者已登入則導向至Shopping cart ... -->
+                    </li>
+                     <li>                   
+                        <a href="#">登出 </a> 
+                        <!-- ... 如果已完成登入才顯示 ... -->   
+                        </a> 
+                        </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -63,65 +72,45 @@
     <!-- Page Content -->
     <div class="container">
 
-        <!-- Portfolio Item Heading -->
     <div class="row">
             <div class="col-lg-12">
+            
                 <h1 class="page-header">
-                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                登入
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                訓練清單
                     
                 </h1>
             </div>
         </div>
-        <form class="form-horizontal" role="form">
-  <div class="form-group">
-    <label for="inputAccount" class="col-sm-2 control-label">帳號</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputAccount" placeholder="輸入帳號">
-                              <!-- ... 使用者輸入#(帳號) ... -->
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">密碼</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword" placeholder="密碼">
-                               <!-- ... 使用者輸入#(密碼) ... -->
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> 記住我
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-     
 
-        <a href="導向至Main">
-            <button type="submit" class="btn btn-default">登入</button>
-                                 <!-- ...傳送#(form)資料 ... -->
-                                 <div class="alert">
-                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                               帳號或密碼錯誤
-                                </div>
-                                <!-- ... 使用者登入失敗，顯示上面的Alert ... -->
-                                <!-- ... 使用者登入成功，則導向至Main ... -->
-        </a>
+        <!-- Portfolio Item Heading -->
+    <table class="table">
+    <caption> 每周訓練表</caption>
+        <thread>
+            <tr>
+            <th>星期一</th>
+            <th>星期二</th>
+            <th>星期三</th>
+            <th>星期四</th>
+            <th>星期五</th>
+            <th>星期六</th>
+            <th>星期日</th>
+            </tr>
+        </thread>
+        <tbody>
 
-    </div>
-    <br>
-    <div class="col-sm-offset-2 col-sm-10">
-      <a href="#<Sign up>">
-      <button type="submit" class="btn btn-default">還未成為會員?</button>      
-                                <!-- ... 使用者導向至Sign up ... -->
-        </a>
-    </div>
-  </div>
-</form>
+
+            <!-- ... 指定填訓練課程  ... -->
+
+
+
+
+        </tbody>   
+
+
+    </table>
+
+
         <!-- /.row -->
 
         <hr>

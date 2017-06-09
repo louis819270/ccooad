@@ -44,16 +44,24 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                        <li>
+                    <li>
                         <a href="#<網頁導向選擇>">點數儲值</a>
                         <!-- ... 如果使用者未登入則導向至Log in ... -->
                         <!-- ... 如果使用者已登入則導向至Deposit page ... -->
                     </li>
 
                     <li>
+                        <a href="導向至Calc BMI">輕鬆計算BMI</a>
+                    </li>
+                    <li>
+                        <a href="#<網頁導向選擇>">訓練清單</a>
+                        <!-- ... 如果使用者未登入則導向至Log in ... -->
+                        <!-- ... 如果使用者已登入則導向至Training menu ... -->
+                    </li>
+                    <li>
 
                         <a href="#<網頁導向選擇>">購物車</a>
-
+                        <!-- ... 如果使用者未登入則導向至Log in ... -->
                         <!-- ... 如果使用者已登入則導向至Shopping cart ... -->
                     </li>
                     
@@ -81,48 +89,84 @@
     <!-- Page Content -->
     <div class="container">
 
+        <!-- Portfolio Item Heading -->
     <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                訂單管理
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                基礎代謝率(TDEE)小小算盤
                     
                 </h1>
             </div>
         </div>
+        <form class="form-horizontal" role="form">
+  
+<div class="form-group">
+    <label for="inputGender" class="col-sm-2 control-label">性別</label>
+                        <select class="form-control">
+                            <option>男生</option>
+                            <option>女生</option>
+                        </select>
+  </div>
 
-        <!-- Portfolio Item Heading -->
-    <table class="table">
-    <caption> 您的訂單</caption>
-        <thread>
-            <tr>
-            <th>訂單ID</th>
-            <th>商品ID</th>
-            <th>商品圖片</th>
-            <th>商品數量</th>
-            <th>單價</th>
-            <th>總價</th>
-            <th>運送狀態</th>
-            <th>購買時間</th>
-            <th><!-- ... 退貨按鈕欄位  ... --></th>
-            </tr>
-        </thread>
-        <tbody>
+ <div class="form-group">
+    <label for="inpuAge" class="col-sm-2 control-label">年齡</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="inputAge" >
+                              <!-- ... 使用者輸入#(年齡) ... -->
+
+  <div class="form-group">
+    <label for="inputHeight" class="col-sm-2 control-label">身高(cm)</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="inputHeight" placeholder="182">
+                              <!-- ... 使用者輸入#(身高) ... -->
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputWeight" class="col-sm-2 control-label">體重(kg)</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="inputWeight" placeholder="90">
+                               <!-- ... 使用者輸入#(體重) ... -->
+    </div>
+  </div>
+
+<div class="form-group">
+    <label for="inputWeekly" class="col-sm-2 control-label">每周運動次數</label>
+                        <select class="form-control">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+  </div>
+
+<div class="form-group">
+    <label for="inputQuestion" class="col-sm-2 control-label">從事勞力工作?</label>
+                        <select class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+  </div>
 
 
-            <!-- ... 檢索 DB  ... -->
-<button type="submit" class="btn btn-default">退貨</button>
-            <!-- ... 退貨Button  ... -->
-
-
-        </tbody>   
-
-
-    </table>
 
 
 
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">來算一算吧</button>
+                                 <!-- ...傳送#(form)資料 ... -->
 
+    </div>
+    <br>
+  <div class="form-group">
+    <label for="outputResult" class="col-sm-2 control-label"> #<TDEE結果> </label>
+                                 <!-- ...回傳Result資料 ... -->
+  </div>
+</form>
         <!-- /.row -->
 
         <hr>
@@ -149,3 +193,11 @@
 </body>
 
 </html>
+                   <label class="col-sm-2 control-label">選擇數量</label>
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
