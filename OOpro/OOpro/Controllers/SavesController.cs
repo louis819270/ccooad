@@ -10,112 +10,113 @@ using OOpro.Models;
 
 namespace OOpro.Controllers
 {
-    public class ArticleController : Controller
+    public class SavesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private OOproDB db = new OOproDB();
 
-        // GET: Article
+        // GET: Saves
         public ActionResult Index()
         {
-            var articles = db.Articles.Include(a => a.User);
-            return View(articles.ToList());
+            var save = db.Save.Include(s => s.User);
+            return View(save.ToList());
         }
 
-        // GET: Article/Details/5
+        // GET: Saves/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            Save save = db.Save.Find(id);
+            if (save == null)
             {
                 return HttpNotFound();
             }
-            return View(article);
+            return View(save);
         }
 
-        // GET: Article/Create
+        // GET: Saves/Create
         public ActionResult Create()
         {
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Account");
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account");
             return View();
         }
 
-        // POST: Article/Create
+        // POST: Saves/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Text,ClickRate,UserID,Time")] Article article)
+        public ActionResult Create([Bind(Include = "ID,UserID,Money,Time")] Save save)
         {
+            save.Time = DateTime.Now;
             if (ModelState.IsValid)
             {
-                db.Articles.Add(article);
+                db.Save.Add(save);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Account", article.UserID);
-            return View(article);
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
+            return View(save);
         }
 
-        // GET: Article/Edit/5
+        // GET: Saves/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            Save save = db.Save.Find(id);
+            if (save == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Account", article.UserID);
-            return View(article);
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
+            return View(save);
         }
 
-        // POST: Article/Edit/5
+        // POST: Saves/Edit/5
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Text,ClickRate,UserID,Time")] Article article)
+        public ActionResult Edit([Bind(Include = "ID,UserID,Money,Time")] Save save)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(article).State = EntityState.Modified;
+                db.Entry(save).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Account", article.UserID);
-            return View(article);
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
+            return View(save);
         }
 
-        // GET: Article/Delete/5
+        // GET: Saves/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            Save save = db.Save.Find(id);
+            if (save == null)
             {
                 return HttpNotFound();
             }
-            return View(article);
+            return View(save);
         }
 
-        // POST: Article/Delete/5
+        // POST: Saves/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Article article = db.Articles.Find(id);
-            db.Articles.Remove(article);
+            Save save = db.Save.Find(id);
+            db.Save.Remove(save);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
