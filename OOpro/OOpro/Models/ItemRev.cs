@@ -12,15 +12,14 @@ namespace OOpro.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Article
+    public partial class ItemRev
     {
         public int ID { get; set; }
-        public string Title { get; set; }
-        public string Text { get; set; }
-        public int ClickRate { get; set; }
+        public int ItemID { get; set; }
         public int UserID { get; set; }
-        public System.DateTime Time { get; set; }
+        public string Text { get; set; }
     
+        public virtual Item Item { get; set; }
         public virtual User User { get; set; }
     }
 }
