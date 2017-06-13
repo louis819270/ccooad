@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a5bc03ef4e1c4df9ae3b966d7015095a" Name="Diagram1">
+        <EntityTypeShape EntityType="OOproModel.Article" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOproModel.Item" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOproModel.ItemRev" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOproModel.Order" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOproModel.Save" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOproModel.User" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="OOproModel.FK_Article_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OOproModel.FK_ItemRev_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="OOproModel.FK_Order_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="OOproModel.FK_ItemRev_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OOproModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OOproModel.FK_Save_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

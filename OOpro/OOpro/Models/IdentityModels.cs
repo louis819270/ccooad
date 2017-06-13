@@ -30,6 +30,6 @@ namespace OOpro.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<OOpro.Models.Article> Article { get; set; }
+        public System.Data.Entity.DbSet<OOpro.Models.Article> Articles { get; set; }
     }
 }

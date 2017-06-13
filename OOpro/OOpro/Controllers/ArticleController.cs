@@ -17,8 +17,8 @@ namespace OOpro.Controllers
         // GET: Article
         public ActionResult Index()
         {
-            
-            return View(db.Article.ToList());
+            var articles = db.Articles.Include(a => a.User);
+            return View(articles.ToList());
         }
 
         // GET: Article/Details/5
@@ -28,7 +28,7 @@ namespace OOpro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Article.Find(id);
+            Article article = db.Articles.Find(id);
             if (article == null)
             {
                 return HttpNotFound();
@@ -39,6 +39,7 @@ namespace OOpro.Controllers
         // GET: Article/Create
         public ActionResult Create()
         {
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Account");
             return View();
         }
 
@@ -47,15 +48,16 @@ namespace OOpro.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Text,ClickRate,CreateDate,CreateUser,LastEditDate,LastEditUser")] Article article)
+        public ActionResult Create([Bind(Include = "ID,Title,Text,ClickRate,UserID,Time")] Article article)
         {
             if (ModelState.IsValid)
             {
-                db.Article.Add(article);
+                db.Articles.Add(article);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Account", article.UserID);
             return View(article);
         }
 
@@ -66,11 +68,12 @@ namespace OOpro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Article.Find(id);
+            Article article = db.Articles.Find(id);
             if (article == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Account", article.UserID);
             return View(article);
         }
 
@@ -79,15 +82,15 @@ namespace OOpro.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Text,ClickRate,CreateDate,CreateUser,LastEditDate,LastEditUser")] Article article)
+        public ActionResult Edit([Bind(Include = "ID,Title,Text,ClickRate,UserID,Time")] Article article)
         {
-            
             if (ModelState.IsValid)
             {
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Account", article.UserID);
             return View(article);
         }
 
@@ -98,7 +101,7 @@ namespace OOpro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Article.Find(id);
+            Article article = db.Articles.Find(id);
             if (article == null)
             {
                 return HttpNotFound();
@@ -111,8 +114,8 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Article article = db.Article.Find(id);
-            db.Article.Remove(article);
+            Article article = db.Articles.Find(id);
+            db.Articles.Remove(article);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

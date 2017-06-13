@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.User.Account)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
@@ -21,22 +24,16 @@
             @Html.DisplayNameFor(model => model.ClickRate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastEditDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastEditUser)
+            @Html.DisplayNameFor(model => model.Time)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Account)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
@@ -47,16 +44,7 @@
             @Html.DisplayFor(modelItem => item.ClickRate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastEditDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastEditUser)
+            @Html.DisplayFor(modelItem => item.Time)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
