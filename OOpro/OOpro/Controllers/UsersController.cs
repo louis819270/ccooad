@@ -100,70 +100,72 @@ namespace OOpro.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-    // GET: Users/Edit/5
-    public ActionResult Edit(int? id)
-    {
-        if (id == null)
+        // GET: Users/Edit/5
+        public ActionResult Edit()
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-        User user = db.User.Find(id);
-        if (user == null)
-        {
-            return HttpNotFound();
-        }
-        return View(user);
-    }
 
-    // POST: Users/Edit/5
-    // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-    // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
-    {
-        if (ModelState.IsValid)
+            int id = Convert.ToInt32( Session["UserID"]);
+
+            User user = db.User.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Users/Edit/5
+        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
+        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
         {
-            db.Entry(user).State = EntityState.Modified;
+            user.Account = db.User.AsNoTracking().FirstOrDefault(a => a.ID == user.ID).Account;
+            user.LV = db.User.AsNoTracking().FirstOrDefault(a => a.ID == user.ID).LV;
+            user.Picture = null;
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+        // GET: Users/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.User.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Users/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            User user = db.User.Find(id);
+            db.User.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        return View(user);
-    }
 
-    // GET: Users/Delete/5
-    public ActionResult Delete(int? id)
-    {
-        if (id == null)
+        protected override void Dispose(bool disposing)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
-        User user = db.User.Find(id);
-        if (user == null)
-        {
-            return HttpNotFound();
-        }
-        return View(user);
     }
-
-    // POST: Users/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public ActionResult DeleteConfirmed(int id)
-    {
-        User user = db.User.Find(id);
-        db.User.Remove(user);
-        db.SaveChanges();
-        return RedirectToAction("Index");
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            db.Dispose();
-        }
-        base.Dispose(disposing);
-    }
-}
 }
