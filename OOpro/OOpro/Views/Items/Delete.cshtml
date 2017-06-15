@@ -1,54 +1,54 @@
-﻿@model OOpro.Models.Article
+﻿@model OOpro.Models.Item
 
 @{
-    ViewBag.Title = @Html.DisplayFor(model => model.Title);
+    ViewBag.Title = "Delete";
 }
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Article</h4>
+    <h4>Item</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Text)
+            @Html.DisplayNameFor(model => model.Picture)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Text)
+            @Html.DisplayFor(model => model.Picture)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ClickRate)
+            @Html.DisplayNameFor(model => model.Price)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ClickRate)
+            @Html.DisplayFor(model => model.Price)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Time)
+            @Html.DisplayNameFor(model => model.Count)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Time)
+            @Html.DisplayFor(model => model.Count)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.User.Account)
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.User.Account)
+            @Html.DisplayFor(model => model.Description)
         </dd>
 
     </dl>
