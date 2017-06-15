@@ -1,13 +1,12 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -18,15 +17,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("CC107的健身購物網站", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("首頁", "Index", "Home")</li>
-                    <li>@Html.ActionLink("關於", "About", "Home")</li>
-                    <li>@Html.ActionLink("連絡方式", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("文章分享", "Index", "Articles")</li>
+                    <li>@Html.ActionLink("輕鬆計算BMR", "bmr", "Calculate")</li>
+                    <li>@Html.ActionLink("輕鬆計算BMI", "bmi", "Calculate")</li>
+                    <li>@Html.ActionLink("訓練清單", "Index", "")</li>
+                    <li>@Html.ActionLink("購物車", "Index", "")</li>
+                    <li>@Html.ActionLink("點數儲值", "Index", "Saves")</li>
+                    @if (Session["UserID"] == null)
+                    {
+                        <li>@Html.ActionLink("註冊", "Register", "Users")</li>
+                        <li>@Html.ActionLink("登入", "Login", "Users")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("剩餘點數：" + @Session["Money"], "Index", "Saves")</li>
+                        <li>@Html.ActionLink("會員專區", "Edit", "Users")</li>
+                        <li>@Html.ActionLink("登出", "Logout", "Users")</li>
+                    }
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -34,7 +46,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
+            <p>&copy; @DateTime.Now.Year - CC107</p>
         </footer>
     </div>
 

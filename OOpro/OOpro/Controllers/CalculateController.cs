@@ -38,31 +38,32 @@ namespace OOpro.Controllers
             }
         }
 
-        public ActionResult tdee()
+        public ActionResult bmr()
         {
-            ViewData["ResultTDEE"] = Session["ResultTDEE"];
-            Session["ResultTDEE"] = null;
+            ViewData["ResultBMRB"] = Session["ResultBMRB"];
+            ViewData["ResultBMRG"] = Session["ResultBMRG"];
+            Session["ResultBMRB"] = null;
+            Session["ResultBMRG"] = null;
 
             return View();
         }
 
         // POST: Calculate/CalculateTDEE
         [HttpPost]
-        public ActionResult CalculateTDEE(FormCollection collection)
+        public ActionResult CalculateBMR(int inputHeight, int inputWeight, int inputAge)
         {
             try
             {
-                // TODO 不會算
-                // double ResultTDEE = (double)collection.GetKey( / ((double)(inputHeight * inputHeight) / 10000);
-                // Session["ResultTDEE"] = Math.Round(ResultTDEE).ToString();
-                return RedirectToAction("tdee");
+                double ResultBMRB = (10 * (double)inputWeight) + (6.25 * (double)inputHeight) - (5 * (double)inputAge) + 5;
+                double ResultBMRG = (10 * (double)inputWeight) + (6.25 * (double)inputHeight) - (5 * (double)inputAge) - 161;
+                Session["ResultBMRB"] = Math.Round(ResultBMRB).ToString();
+                Session["ResultBMRG"] = Math.Round(ResultBMRG).ToString();
+                return RedirectToAction("bmr");
             }
             catch
             {
-                return RedirectToAction("tdee");
+                return RedirectToAction("bmr");
             }
         }
-
-        
     }
 }
