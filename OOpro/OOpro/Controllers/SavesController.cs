@@ -51,6 +51,8 @@ namespace OOpro.Controllers
         public ActionResult Create([Bind(Include = "ID,UserID,Money,Time")] Save save)
         {
             save.Time = DateTime.Now;
+
+
             if (ModelState.IsValid)
             {
                 db.Save.Add(save);
@@ -85,9 +87,13 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,UserID,Money,Time")] Save save)
         {
+            save.Time = DateTime.Now;
+            save.Money = db.Save.AsNoTracking().FirstOrDefault(a => a.ID == save.ID).Money + save.Money;
+
             if (ModelState.IsValid)
             {
                 db.Entry(save).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
