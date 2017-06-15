@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
@@ -22,13 +22,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("文章分享", "Index", "Articles")</li>
-                    <li>@Html.ActionLink("輕鬆計算TDEE", "Index", "")</li>
-                    <li>@Html.ActionLink("輕鬆計算BMI", "Index", "")</li>
+                    <li>@Html.ActionLink("輕鬆計算BMR", "bmr", "Calculate")</li>
+                    <li>@Html.ActionLink("輕鬆計算BMI", "bmi", "Calculate")</li>
                     <li>@Html.ActionLink("訓練清單", "Index", "")</li>
                     <li>@Html.ActionLink("購物車", "Index", "")</li>
                     <li>@Html.ActionLink("點數儲值", "Index", "Saves")</li>
-                    <li>@Html.ActionLink("註冊", "Register", "Users")</li>
-                    <li>@Html.ActionLink("登入", "Login", "Users")</li>
+                    @if (Session["UserID"] == null)
+                    {
+                        <li>@Html.ActionLink("註冊", "Register", "Users")</li>
+                        <li>@Html.ActionLink("登入", "Login", "Users")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("登出", "Logout", "Users")</li>
+                    }
                 </ul>
             </div>
         </div>
