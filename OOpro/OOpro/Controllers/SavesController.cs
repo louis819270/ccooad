@@ -19,7 +19,7 @@ namespace OOpro.Controllers
         {
             if (Session["userID"] == null) {
                 // TODO 轉回登入頁
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Users");
             }
             var save = db.Save.Include(s => s.User);
             return View(save.ToList());

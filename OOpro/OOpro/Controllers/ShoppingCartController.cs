@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OOpro.Models;
+using System.Collections;
 
 namespace OOpro.Controllers
 {
@@ -17,7 +18,30 @@ namespace OOpro.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            return View(db.Item.ToList());
+            //////////////////////////////////////////////////////////////////////////////////////////
+            ArrayList a = new ArrayList();
+            int[] b = new int[2] { 1,3 };
+            a.Add(b);
+            Session["Cart"] = a;
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //Item item = db.Item.Find(1);
+            IList c = (ArrayList)Session["Cart"];
+            IList d = new string[4][];
+            string[] e = new string[4];
+            int count =0;
+            foreach (int[] i in c) {
+                Item item = db.Item.Find(i[0]);
+                e[0] = item.Name;
+                e[1] = i[1].ToString();
+                e[2] = item.Price.ToString();
+                e[3] = (i[1] * item.Price).ToString();
+                d[count++] = e;
+            }          
+            ViewData["f"] = d;
+
+
+           
+            return View();
         }
 
         // GET: ShoppingCart/Details/5
@@ -51,13 +75,11 @@ namespace OOpro.Controllers
             //array = Json.decode(Session["shopcart"])
 
 
-            
-            if (Session["shopcart_" + item.ID.ToString()] == null) {
-                string[] array = new string[] { item.Name,item.Price.ToString(),num1.ToString()};
-                Session["shopcart_"] = array;
+            //購物車沒有該商品
+            if (Session["shopcart_" + item.ID.ToString()] == null)
+            {
+                
             }
-
-            if(Session["shopcart_" + item.ID.ToString()] == )
 
             if (ModelState.IsValid)
             {
