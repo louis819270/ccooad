@@ -77,8 +77,8 @@
           <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Picture" Type="image" />
-          <Property Name="LV" Type="int" Nullable="false" />
+          <Property Name="Picture" Type="image"/>
+          <Property Name="LV" Type="int" Nullable="false"  />
         </EntityType>
         <Association Name="FK_Article_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
