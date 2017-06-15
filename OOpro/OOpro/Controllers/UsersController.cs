@@ -92,70 +92,76 @@ namespace OOpro.Controllers
 
         }
 
-        // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Logout()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.User.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            Session.Abandon();
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        // POST: Users/Edit/5
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
+    // GET: Users/Edit/5
+    public ActionResult Edit(int? id)
+    {
+        if (id == null)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
+        User user = db.User.Find(id);
+        if (user == null)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.User.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            return HttpNotFound();
         }
+        return View(user);
+    }
 
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+    // POST: Users/Edit/5
+    // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
+    // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Edit([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
+    {
+        if (ModelState.IsValid)
         {
-            User user = db.User.Find(id);
-            db.User.Remove(user);
+            db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        return View(user);
     }
+
+    // GET: Users/Delete/5
+    public ActionResult Delete(int? id)
+    {
+        if (id == null)
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+        User user = db.User.Find(id);
+        if (user == null)
+        {
+            return HttpNotFound();
+        }
+        return View(user);
+    }
+
+    // POST: Users/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public ActionResult DeleteConfirmed(int id)
+    {
+        User user = db.User.Find(id);
+        db.User.Remove(user);
+        db.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            db.Dispose();
+        }
+        base.Dispose(disposing);
+    }
+}
 }
