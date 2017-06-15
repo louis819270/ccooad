@@ -151,6 +151,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\CalculateController.cs" />
+    <Compile Include="Controllers\FitnessMenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\SavesController.cs" />
@@ -268,6 +269,7 @@
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Calculate\bmi.cshtml" />
     <Content Include="Views\Calculate\bmr.cshtml" />
+    <Content Include="Views\FitnessMenu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
