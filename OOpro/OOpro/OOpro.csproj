@@ -255,10 +255,11 @@
     <Content Include="Views\Saves\Details.cshtml" />
     <Content Include="Views\Saves\Edit.cshtml" />
     <Content Include="Views\Saves\Index.cshtml" />
+    <Content Include="Views\Calculate\bmi.cshtml" />
+    <Content Include="Views\Calculate\bmr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Calculate\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
