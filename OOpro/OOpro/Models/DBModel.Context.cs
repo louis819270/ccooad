@@ -31,5 +31,6 @@ namespace OOpro.Models
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Save> Save { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Cart> Cart { get; set; }
     }
 }

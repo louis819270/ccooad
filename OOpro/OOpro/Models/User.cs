@@ -21,6 +21,7 @@ namespace OOpro.Models
             this.ItemRev = new HashSet<ItemRev>();
             this.Order = new HashSet<Order>();
             this.Save = new HashSet<Save>();
+            this.Cart = new HashSet<Cart>();
         }
     
         public int ID { get; set; }
@@ -40,5 +41,7 @@ namespace OOpro.Models
         public virtual ICollection<Order> Order { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Save> Save { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart { get; set; }
     }
 }

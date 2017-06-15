@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OOproDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OOproDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Article">
           <Key>
             <PropertyRef Name="ID" />
@@ -16,16 +16,26 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Time" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Picture" Type="image" Nullable="false" />
+          <Property Name="Picture" Type="image" />
           <Property Name="Price" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ItemRev">
           <Key>
@@ -67,8 +77,8 @@
           <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Picture" Type="image" />
-          <Property Name="LV" Type="int" Nullable="false" />
+          <Property Name="Picture" Type="image"/>
+          <Property Name="LV" Type="int" Nullable="false"  />
         </EntityType>
         <Association Name="FK_Article_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -144,6 +154,7 @@
         </Association>
         <EntityContainer Name="OOproDBModelStoreContainer">
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemRev" EntityType="Self.ItemRev" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
@@ -174,8 +185,7 @@
             <End Role="Save" EntitySet="Save" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OOproDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -197,12 +207,14 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="ItemRev" Relationship="Self.FK_ItemRev_Item" FromRole="Item" ToRole="ItemRev" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Item" FromRole="Item" ToRole="Order" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cart" Relationship="OOproDBModel.CartItem" FromRole="Item" ToRole="Cart" />
         </EntityType>
         <EntityType Name="ItemRev">
           <Key>
@@ -255,6 +267,7 @@
           <NavigationProperty Name="ItemRev" Relationship="Self.FK_ItemRev_User" FromRole="User" ToRole="ItemRev" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="Save" Relationship="Self.FK_Save_User" FromRole="User" ToRole="Save" />
+          <NavigationProperty Name="Cart" Relationship="OOproDBModel.CartUser" FromRole="User" ToRole="Cart" />
         </EntityType>
         <Association Name="FK_Article_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -359,7 +372,53 @@
             <End Role="User" EntitySet="User" />
             <End Role="Save" EntitySet="Save" />
           </AssociationSet>
+          <EntitySet Name="Cart" EntityType="OOproDBModel.Cart" />
+          <AssociationSet Name="CartItem" Association="OOproDBModel.CartItem">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="CartUser" Association="OOproDBModel.CartUser">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="OOproDBModel.CartItem" FromRole="Cart" ToRole="Item" />
+          <Property Name="ItemID1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="OOproDBModel.CartUser" FromRole="Cart" ToRole="User" />
+          <Property Name="UserID1" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CartItem">
+          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
+          <End Type="OOproDBModel.Item" Role="Item" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ItemID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CartUser">
+          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
+          <End Type="OOproDBModel.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="UserID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -381,6 +440,7 @@
           <EntitySetMapping Name="Item">
             <EntityTypeMapping TypeName="OOproDBModel.Item">
               <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
@@ -434,6 +494,16 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="LV" ColumnName="LV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cart">
+            <EntityTypeMapping TypeName="OOproDBModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
