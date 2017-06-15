@@ -77,8 +77,8 @@
           <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Picture" Type="image"/>
-          <Property Name="LV" Type="int" Nullable="false"  />
+          <Property Name="Picture" Type="image" />
+          <Property Name="LV" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Article_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -88,6 +88,30 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Article">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Item">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -164,6 +188,14 @@
             <End Role="User" EntitySet="User" />
             <End Role="Article" EntitySet="Article" />
           </AssociationSet>
+          <AssociationSet Name="FK_Cart_Item" Association="Self.FK_Cart_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_User" Association="Self.FK_Cart_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
           <AssociationSet Name="FK_ItemRev_Item" Association="Self.FK_ItemRev_Item">
             <End Role="Item" EntitySet="Item" />
             <End Role="ItemRev" EntitySet="ItemRev" />
@@ -214,7 +246,7 @@
           <NavigationProperty Name="ItemRev" Relationship="Self.FK_ItemRev_Item" FromRole="Item" ToRole="ItemRev" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Item" FromRole="Item" ToRole="Order" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cart" Relationship="OOproDBModel.CartItem" FromRole="Item" ToRole="Cart" />
+          <NavigationProperty Name="Cart" Relationship="OOproDBModel.FK_Cart_Item" FromRole="Item" ToRole="Cart" />
         </EntityType>
         <EntityType Name="ItemRev">
           <Key>
@@ -267,7 +299,7 @@
           <NavigationProperty Name="ItemRev" Relationship="Self.FK_ItemRev_User" FromRole="User" ToRole="ItemRev" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="Save" Relationship="Self.FK_Save_User" FromRole="User" ToRole="Save" />
-          <NavigationProperty Name="Cart" Relationship="OOproDBModel.CartUser" FromRole="User" ToRole="Cart" />
+          <NavigationProperty Name="Cart" Relationship="OOproDBModel.FK_Cart_User" FromRole="User" ToRole="Cart" />
         </EntityType>
         <Association Name="FK_Article_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -373,15 +405,15 @@
             <End Role="Save" EntitySet="Save" />
           </AssociationSet>
           <EntitySet Name="Cart" EntityType="OOproDBModel.Cart" />
-          <AssociationSet Name="CartItem" Association="OOproDBModel.CartItem">
-            <End Role="Cart" EntitySet="Cart" />
+          <AssociationSet Name="FK_Cart_Item" Association="OOproDBModel.FK_Cart_Item">
             <End Role="Item" EntitySet="Item" />
-          </AssociationSet>
-          <AssociationSet Name="CartUser" Association="OOproDBModel.CartUser">
             <End Role="Cart" EntitySet="Cart" />
-            <End Role="User" EntitySet="User" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_Cart_User" Association="OOproDBModel.FK_Cart_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Cart">
           <Key>
             <PropertyRef Name="ID" />
@@ -390,36 +422,34 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="Number" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="OOproDBModel.CartItem" FromRole="Cart" ToRole="Item" />
-          <Property Name="ItemID1" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="OOproDBModel.CartUser" FromRole="Cart" ToRole="User" />
-          <Property Name="UserID1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="OOproDBModel.FK_Cart_Item" FromRole="Cart" ToRole="Item" />
+          <NavigationProperty Name="User" Relationship="OOproDBModel.FK_Cart_User" FromRole="Cart" ToRole="User" />
         </EntityType>
-        <Association Name="CartItem">
-          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
+        <Association Name="FK_Cart_Item">
           <End Type="OOproDBModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Cart">
-              <PropertyRef Name="ItemID1" />
+              <PropertyRef Name="ItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CartUser">
-          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
+        <Association Name="FK_Cart_User">
           <End Type="OOproDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Cart">
-              <PropertyRef Name="UserID1" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
