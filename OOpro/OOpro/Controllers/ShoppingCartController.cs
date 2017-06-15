@@ -48,6 +48,17 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Picture,Price,Count,Description")] Item item)
         {
+            //array = Json.decode(Session["shopcart"])
+
+
+            
+            if (Session["shopcart_" + item.ID.ToString()] == null) {
+                string[] array = new string[] { item.Name,item.Price.ToString(),num1.ToString()};
+                Session["shopcart_"] = array;
+            }
+
+            if(Session["shopcart_" + item.ID.ToString()] == )
+
             if (ModelState.IsValid)
             {
                 db.Item.Add(item);

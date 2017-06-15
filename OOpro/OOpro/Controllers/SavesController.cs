@@ -17,6 +17,10 @@ namespace OOpro.Controllers
         // GET: Saves
         public ActionResult Index()
         {
+            if (Session["userID"] == null) {
+                // TODO 轉回登入頁
+                return RedirectToAction("Index", "Home");
+            }
             var save = db.Save.Include(s => s.User);
             return View(save.ToList());
         }
@@ -51,8 +55,7 @@ namespace OOpro.Controllers
         public ActionResult Create([Bind(Include = "ID,UserID,Money,Time")] Save save)
         {
             save.Time = DateTime.Now;
-
-
+           
             if (ModelState.IsValid)
             {
                 db.Save.Add(save);
@@ -62,6 +65,11 @@ namespace OOpro.Controllers
 
             ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
             return View(save);
+        }
+
+        private void MessageBox(string v)
+        {
+            throw new NotImplementedException();
         }
 
         // GET: Saves/Edit/5

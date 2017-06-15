@@ -48,8 +48,15 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
         {
+            int[] bonus = new int[] { 1,1, 1, 1, 1,1, 1, 1,1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 50, 50, 100 };
+            Random random_number = new Random();
+            random_number.Next(0, 60);
+           
+            user.Account = db.User.AsNoTracking().FirstOrDefault(a => a.ID == user.ID).Account + user.Account;
+
             if (ModelState.IsValid)
             {
+                
                 db.User.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
