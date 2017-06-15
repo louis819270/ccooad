@@ -29,6 +29,9 @@ namespace OOpro.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Article article = db.Article.Find(id);
+            article.ClickRate++;
+            db.Entry(article).State = EntityState.Modified;
+            db.SaveChanges();
             if (article == null)
             {
                 return HttpNotFound();
@@ -50,6 +53,8 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,Text,ClickRate,UserID,Time")] Article article)
         {
+            article.Time = DateTime.Now;
+            article.ClickRate = 0;
             if (ModelState.IsValid)
             {
                 db.Article.Add(article);
@@ -84,6 +89,8 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,Text,ClickRate,UserID,Time")] Article article)
         {
+            article.ClickRate = 0;
+            article.Time = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Entry(article).State = EntityState.Modified;
