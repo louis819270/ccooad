@@ -17,10 +17,10 @@
         <AssociationConnector Association="OOproDBModel.FK_ItemRev_User" ManuallyRouted="false" />
         <AssociationConnector Association="OOproDBModel.FK_Order_User" ManuallyRouted="false" />
         <AssociationConnector Association="OOproDBModel.FK_Save_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="OOproDBModel.Cart" Width="1.5" PointX="8.25" PointY="4.625" />
-        <AssociationConnector Association="OOproDBModel.CartItem" />
-        <AssociationConnector Association="OOproDBModel.CartUser" />
-      </Diagram>
+        <EntityTypeShape EntityType="OOproDBModel.Cart" Width="1.5" PointX="9.25" PointY="2.875" />
+        <AssociationConnector Association="OOproDBModel.FK_Cart_Item" />
+        <AssociationConnector Association="OOproDBModel.FK_Cart_User" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

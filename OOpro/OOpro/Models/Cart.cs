@@ -18,8 +18,6 @@ namespace OOpro.Models
         public int UserID { get; set; }
         public int ItemID { get; set; }
         public int Number { get; set; }
-        public int ItemID1 { get; set; }
-        public int UserID1 { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual User User { get; set; }
