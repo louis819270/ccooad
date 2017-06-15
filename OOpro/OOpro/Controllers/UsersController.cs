@@ -85,6 +85,8 @@ namespace OOpro.Controllers
             {
                 user = db.User.AsNoTracking().FirstOrDefault(a => a.Account == user.Account);
                 Session["UserID"] = user.ID;
+                Session["User"] = user.Account;
+                Session["Money"] = db.Save.AsNoTracking().FirstOrDefault(a => a.UserID == user.ID).Money;
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
             else
