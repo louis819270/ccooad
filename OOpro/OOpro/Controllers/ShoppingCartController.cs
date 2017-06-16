@@ -46,9 +46,24 @@ namespace OOpro.Controllers
         // GET: ShoppingCart/Create
         public ActionResult Create()
         {
-            ViewBag.ItemID = new SelectList(db.Item, "ID", "Name");
-            ViewBag.UserID = new SelectList(db.User, "ID", "Account");
-            return View();
+            if (Session["UserID"] == null)
+                return RedirectToAction("Login", "Users", new { area = "" });
+            if (TempData["UserID"] == null || TempData["ItemID"] == null || TempData["count"] == null)
+                return RedirectToAction("Index", "Home", new { area = "" });
+
+            Cart cart = new Cart();
+            cart.UserID = Convert.ToInt32(TempData["UserID"]);
+            cart.ItemID = Convert.ToInt32(TempData["ItemID"]);
+            cart.Number = Convert.ToInt32(TempData["count"]);
+            TempData.Clear();
+            if (ModelState.IsValid)
+            {
+                db.Cart.Add(cart);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Items", new { area = "" });
+            }
+
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         // POST: ShoppingCart/Create
@@ -58,6 +73,7 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,UserID,ItemID,Number")] Cart cart)
         {
+
             if (ModelState.IsValid)
             {
                 db.Cart.Add(cart);
@@ -117,7 +133,7 @@ namespace OOpro.Controllers
             {
                 return HttpNotFound();
             }
-    
+
             db.Cart.Remove(cart);
             db.SaveChanges();
             return RedirectToAction("Index");

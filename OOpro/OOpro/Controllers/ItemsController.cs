@@ -23,7 +23,7 @@ namespace OOpro.Controllers
                 TempData["Search"] = null;
 
                 var result = (from s in db.Item
-                              where s.Name.Contains(search)
+                              where (s.Name.Contains(search))
                               select s).ToList();
                 return View(result);
 
@@ -52,6 +52,16 @@ namespace OOpro.Controllers
                 return HttpNotFound();
             }
             return View(item);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(int? id, int count)
+        {
+            TempData["ItemID"] = id;
+            TempData["count"] = count;
+            TempData["UserID"] = Session["UserID"];
+            return RedirectToAction("Create", "ShoppingCart", new { area = "" });
         }
 
         // GET: Items/Create
