@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OOpro.Models;
-using System.Collections;
 
 namespace OOpro.Controllers
 {
@@ -18,30 +17,9 @@ namespace OOpro.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            //////////////////////////////////////////////////////////////////////////////////////////
-            ArrayList a = new ArrayList();
-            int[] b = new int[2] { 1,3 };
-            a.Add(b);
-            Session["Cart"] = a;
-            //////////////////////////////////////////////////////////////////////////////////////////
-            //Item item = db.Item.Find(1);
-            IList c = (ArrayList)Session["Cart"];
-            IList d = new string[4][];
-            string[] e = new string[4];
-            int count =0;
-            foreach (int[] i in c) {
-                Item item = db.Item.Find(i[0]);
-                e[0] = item.Name;
-                e[1] = i[1].ToString();
-                e[2] = item.Price.ToString();
-                e[3] = (i[1] * item.Price).ToString();
-                d[count++] = e;
-            }          
-            ViewData["f"] = d;
-
-
-           
-            return View();
+            Session["UserID"] = 1;
+            var cart = db.Cart.Include(c => c.Item).Include(c => c.User);
+            return View(cart.ToList());
         }
 
         // GET: ShoppingCart/Details/5
@@ -51,44 +29,39 @@ namespace OOpro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
-            if (item == null)
+            Cart cart = db.Cart.Find(id);
+            if (cart == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(cart);
         }
 
         // GET: ShoppingCart/Create
         public ActionResult Create()
         {
+            ViewBag.ItemID = new SelectList(db.Item, "ID", "Name");
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account");
             return View();
         }
 
         // POST: ShoppingCart/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Picture,Price,Count,Description")] Item item)
+        public ActionResult Create([Bind(Include = "ID,UserID,ItemID,Number")] Cart cart)
         {
-            //array = Json.decode(Session["shopcart"])
-
-
-            //購物車沒有該商品
-            if (Session["shopcart_" + item.ID.ToString()] == null)
-            {
-                
-            }
-
             if (ModelState.IsValid)
             {
-                db.Item.Add(item);
+                db.Cart.Add(cart);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(item);
+            ViewBag.ItemID = new SelectList(db.Item, "ID", "Name", cart.ItemID);
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account", cart.UserID);
+            return View(cart);
         }
 
         // GET: ShoppingCart/Edit/5
@@ -98,28 +71,32 @@ namespace OOpro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
-            if (item == null)
+            Cart cart = db.Cart.Find(id);
+            if (cart == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            ViewBag.ItemID = new SelectList(db.Item, "ID", "Name", cart.ItemID);
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account", cart.UserID);
+            return View(cart);
         }
 
         // POST: ShoppingCart/Edit/5
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Picture,Price,Count,Description")] Item item)
+        public ActionResult Edit([Bind(Include = "ID,UserID,ItemID,Number")] Cart cart)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(item).State = EntityState.Modified;
+                db.Entry(cart).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(item);
+            ViewBag.ItemID = new SelectList(db.Item, "ID", "Name", cart.ItemID);
+            ViewBag.UserID = new SelectList(db.User, "ID", "Account", cart.UserID);
+            return View(cart);
         }
 
         // GET: ShoppingCart/Delete/5
@@ -129,12 +106,15 @@ namespace OOpro.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
-            if (item == null)
+            Cart cart = db.Cart.Find(id);
+            if (cart == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+    
+            db.Cart.Remove(cart);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: ShoppingCart/Delete/5
@@ -142,8 +122,8 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = db.Item.Find(id);
-            db.Item.Remove(item);
+            Cart cart = db.Cart.Find(id);
+            db.Cart.Remove(cart);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
