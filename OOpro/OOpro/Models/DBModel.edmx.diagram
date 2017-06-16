@@ -6,20 +6,20 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9d2b44981d5e49c1b1c4b9bf761c313e" Name="Diagram1">
         <EntityTypeShape EntityType="OOproDBModel.Article" Width="1.5" PointX="4.25" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OOproDBModel.Item" Width="1.5" PointX="7" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="OOproDBModel.ItemRev" Width="1.5" PointX="2.625" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="OOproDBModel.Order" Width="1.5" PointX="2.375" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OOproDBModel.Save" Width="1.5" PointX="0.5" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OOproDBModel.User" Width="1.5" PointX="0.5" PointY="3.375" IsExpanded="true" />
         <AssociationConnector Association="OOproDBModel.FK_Article_User" ManuallyRouted="false" />
-        <AssociationConnector Association="OOproDBModel.FK_ItemRev_Item" ManuallyRouted="false" />
-        <AssociationConnector Association="OOproDBModel.FK_Order_Item" ManuallyRouted="false" />
         <AssociationConnector Association="OOproDBModel.FK_ItemRev_User" ManuallyRouted="false" />
         <AssociationConnector Association="OOproDBModel.FK_Order_User" ManuallyRouted="false" />
         <AssociationConnector Association="OOproDBModel.FK_Save_User" ManuallyRouted="false" />
         <EntityTypeShape EntityType="OOproDBModel.Cart" Width="1.5" PointX="9.25" PointY="2.875" />
-        <AssociationConnector Association="OOproDBModel.FK_Cart_Item" />
         <AssociationConnector Association="OOproDBModel.FK_Cart_User" />
+        <EntityTypeShape EntityType="OOproDBModel.Item" Width="1.5" PointX="6.625" PointY="0.75" />
+        <AssociationConnector Association="OOproDBModel.FK_Cart_Item" />
+        <AssociationConnector Association="OOproDBModel.FK_ItemRev_Item" />
+        <AssociationConnector Association="OOproDBModel.FK_Order_Item" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -22,7 +22,7 @@ namespace OOpro.Models
         public int TotalPrice { get; set; }
         public int State { get; set; }
     
-        public virtual Item Item { get; set; }
         public virtual User User { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

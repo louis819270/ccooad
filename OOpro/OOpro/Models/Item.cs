@@ -17,24 +17,24 @@ namespace OOpro.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Item()
         {
+            this.Cart = new HashSet<Cart>();
             this.ItemRev = new HashSet<ItemRev>();
             this.Order = new HashSet<Order>();
-            this.Cart = new HashSet<Cart>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
-        public byte[] Picture { get; set; }
+        public string Picture { get; set; }
         public int Price { get; set; }
         public int Count { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemRev> ItemRev { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Cart { get; set; }
     }
 }
