@@ -58,9 +58,23 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Details(int? id, int count)
         {
-            TempData["ItemID"] = id;
+            if (Session["UserID"] == null)
+                return RedirectToAction("Login", "Users", new { area = "" });
+            int ItemID = Convert.ToInt32(id);
+            int UserID = Convert.ToInt32(Session["UserID"]);
+            if (db.Cart.AsNoTracking().FirstOrDefault(a => a.ItemID == ItemID && a.UserID == UserID) != null)
+            {
+                TempData["message"] = "已存在購物車";
+                return RedirectToAction("Index", "Items", new { area = "" });
+            }
+            if (count > db.Item.AsNoTracking().FirstOrDefault(a => a.ID == id).Count)
+            {
+                TempData["message"] = "庫存不足";
+                return RedirectToAction("Index", "Items", new { area = "" });
+            }
+            TempData["ItemID"] = ItemID;
             TempData["count"] = count;
-            TempData["UserID"] = Session["UserID"];
+            TempData["UserID"] = UserID;
             return RedirectToAction("Create", "ShoppingCart", new { area = "" });
         }
 

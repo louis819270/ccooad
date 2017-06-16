@@ -43,10 +43,12 @@
 
                             <p>輸入數量   </p><p style="color:gray">尚有庫存 @Html.DisplayFor(model => model.Count)</p>
                             @Html.TextBox("count", null, new { @class = "btn-info" })
+                            <button type="submit" class="btn btn-default">加入購物車</button>
+
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-default">加入購物車</button>
+                    
                 </form>
             }
             <p>
