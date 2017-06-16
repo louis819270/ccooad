@@ -44,8 +44,19 @@ namespace OOpro.Controllers
         // GET: Orders/Create
         public ActionResult Create()
         {
+            ////////////////////////////////////////////////
+            Session["UserID"] = 1;
+            ////////////////////////////////////////////////
+            if (Session["UserID"] == null)
+            {
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
             ViewBag.ItemID = new SelectList(db.Item, "ID", "Name");
             ViewBag.UserID = new SelectList(db.User, "ID", "Account");
+
+
+
             return View();
         }
 
@@ -56,6 +67,8 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,UserID,ItemID,Count,Time,TotalPrice,State")] Order order)
         {
+
+
             if (ModelState.IsValid)
             {
                 db.Order.Add(order);

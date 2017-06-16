@@ -17,7 +17,13 @@ namespace OOpro.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
+            ////////////////////////////////////////////////
             Session["UserID"] = 1;
+            ////////////////////////////////////////////////
+            if (Session["UserID"] == null)
+            {
+                return RedirectToAction("Login", "Users", new { area = "" });
+            }
             var cart = db.Cart.Include(c => c.Item).Include(c => c.User);
             return View(cart.ToList());
         }
@@ -122,6 +128,10 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["UserID"] == null)
+            {
+                return RedirectToAction("Login", "Users", new { area = "" });
+            }
             Cart cart = db.Cart.Find(id);
             db.Cart.Remove(cart);
             db.SaveChanges();
