@@ -4,6 +4,14 @@
     ViewBag.Title = "Index";
 }
 
+@if (TempData["message"] != null)
+{
+    <script type="text/javascript">
+        var message = @Html.Raw(Json.Encode(TempData["message"]));
+        alert(message);
+    </script>
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -26,31 +34,33 @@
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Count)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.ActionLink(@Html.DisplayFor(modelItem => item.Name).ToString(), "Details", new { id = item.ID })
+            
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Picture)
+            <img src="~/picture/@item.Picture" class="img-responsive" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Count)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @if (item.Count > 0)
+            {
+                <a href='@Url.Action("Details", "Items", new { id = item.ID })'>
+                    <img src="~/picture/hot.jpg" class="img-responsive" />
+                </a>
+                
+            }
+            else
+            {
+                <img src="~/picture/sold.jpg" class="img-responsive" />
+            }
         </td>
     </tr>
 }

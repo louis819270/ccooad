@@ -1,7 +1,7 @@
 ﻿@model OOpro.Models.Item
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Html.DisplayFor(model => model.Name);
 }
 
 <h2>Details</h2>
@@ -9,50 +9,53 @@
 <div>
     <h4>Item</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                精選商品
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
+            </h1>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
-        </dd>
+    <div class="row">
+        <div class="col-md-12">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+            <h3>  #@Html.DisplayFor(model => model.Name)</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+            <img src="~/picture/@Html.DisplayFor(model => model.Picture)" class="img-responsive" />
+            <br>
+            <br>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Count)
-        </dt>
+            <br>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <form role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <p>價格：NT. @Html.DisplayFor(model => model.Price)</p>
+                            <br />
+                            <p>商品描述： @Html.DisplayFor(model => model.Description)</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Count)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+                            <p>輸入數量   </p><p style="color:gray">尚有庫存 @Html.DisplayFor(model => model.Count)</p>
+                            @Html.TextBox("count", null, new { @class = "btn-info" })
+                            <button type="submit" class="btn btn-default">加入購物車</button>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                        </div>
+                    </div>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                    
+                </form>
+            }
+            <p>
+            <p>
+            </p>
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
