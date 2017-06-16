@@ -31,7 +31,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Picture" Type="image" />
+          <Property Name="Picture" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
@@ -233,21 +233,6 @@
           <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="Self.FK_Article_User" FromRole="Article" ToRole="User" />
         </EntityType>
-        <EntityType Name="Item">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Price" Type="Int32" Nullable="false" />
-          <Property Name="Count" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ItemRev" Relationship="Self.FK_ItemRev_Item" FromRole="Item" ToRole="ItemRev" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Item" FromRole="Item" ToRole="Order" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cart" Relationship="OOproDBModel.FK_Cart_Item" FromRole="Item" ToRole="Cart" />
-        </EntityType>
         <EntityType Name="ItemRev">
           <Key>
             <PropertyRef Name="ID" />
@@ -256,8 +241,8 @@
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_ItemRev_Item" FromRole="ItemRev" ToRole="Item" />
           <NavigationProperty Name="User" Relationship="Self.FK_ItemRev_User" FromRole="ItemRev" ToRole="User" />
+          <NavigationProperty Name="Item" Relationship="OOproDBModel.FK_ItemRev_Item" FromRole="ItemRev" ToRole="Item" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -270,8 +255,8 @@
           <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalPrice" Type="Int32" Nullable="false" />
           <Property Name="State" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_Order_Item" FromRole="Order" ToRole="Item" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Item" Relationship="OOproDBModel.FK_Order_Item" FromRole="Order" ToRole="Item" />
         </EntityType>
         <EntityType Name="Save">
           <Key>
@@ -313,30 +298,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemRev_Item">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="ItemRev" Type="Self.ItemRev" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ItemRev">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Item">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ItemRev_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="ItemRev" Type="Self.ItemRev" Multiplicity="*" />
@@ -375,7 +336,6 @@
         </Association>
         <EntityContainer Name="OOproDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Article" EntityType="Self.Article" />
-          <EntitySet Name="Item" EntityType="Self.Item" />
           <EntitySet Name="ItemRev" EntityType="Self.ItemRev" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="Save" EntityType="Self.Save" />
@@ -383,14 +343,6 @@
           <AssociationSet Name="FK_Article_User" Association="Self.FK_Article_User">
             <End Role="User" EntitySet="User" />
             <End Role="Article" EntitySet="Article" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemRev_Item" Association="Self.FK_ItemRev_Item">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="ItemRev" EntitySet="ItemRev" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Item" Association="Self.FK_Order_Item">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemRev_User" Association="Self.FK_ItemRev_User">
             <End Role="User" EntitySet="User" />
@@ -405,13 +357,22 @@
             <End Role="Save" EntitySet="Save" />
           </AssociationSet>
           <EntitySet Name="Cart" EntityType="OOproDBModel.Cart" />
+          <AssociationSet Name="FK_Cart_User" Association="OOproDBModel.FK_Cart_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <EntitySet Name="Item" EntityType="OOproDBModel.Item" />
           <AssociationSet Name="FK_Cart_Item" Association="OOproDBModel.FK_Cart_Item">
             <End Role="Item" EntitySet="Item" />
             <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
-          <AssociationSet Name="FK_Cart_User" Association="OOproDBModel.FK_Cart_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Cart" EntitySet="Cart" />
+          <AssociationSet Name="FK_ItemRev_Item" Association="OOproDBModel.FK_ItemRev_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="ItemRev" EntitySet="ItemRev" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Item" Association="OOproDBModel.FK_Order_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Cart">
@@ -422,8 +383,35 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="Number" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="OOproDBModel.FK_Cart_Item" FromRole="Cart" ToRole="Item" />
           <NavigationProperty Name="User" Relationship="OOproDBModel.FK_Cart_User" FromRole="Cart" ToRole="User" />
+          <NavigationProperty Name="Item" Relationship="OOproDBModel.FK_Cart_Item" FromRole="Cart" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK_Cart_User">
+          <End Type="OOproDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cart" Relationship="OOproDBModel.FK_Cart_Item" FromRole="Item" ToRole="Cart" />
+          <NavigationProperty Name="ItemRev" Relationship="OOproDBModel.FK_ItemRev_Item" FromRole="Item" ToRole="ItemRev" />
+          <NavigationProperty Name="Order" Relationship="OOproDBModel.FK_Order_Item" FromRole="Item" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Cart_Item">
           <End Type="OOproDBModel.Item" Role="Item" Multiplicity="1" />
@@ -437,15 +425,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Cart_User">
-          <End Type="OOproDBModel.User" Role="User" Multiplicity="1" />
-          <End Type="OOproDBModel.Cart" Role="Cart" Multiplicity="*" />
+        <Association Name="FK_ItemRev_Item">
+          <End Type="OOproDBModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OOproDBModel.ItemRev" Role="ItemRev" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Item">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="ItemRev">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Item">
+          <End Type="OOproDBModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="OOproDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -464,19 +464,6 @@
                 <ScalarProperty Name="ClickRate" ColumnName="ClickRate" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Item">
-            <EntityTypeMapping TypeName="OOproDBModel.Item">
-              <MappingFragment StoreEntitySet="Item">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -533,6 +520,19 @@
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="OOproDBModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -17,7 +17,26 @@ namespace OOpro.Controllers
         // GET: Items
         public ActionResult Index()
         {
+            if (TempData["Search"] != null)
+            {
+                string search = TempData["Search"].ToString();
+                TempData["Search"] = null;
+
+                var result = (from s in db.Item
+                              where s.Name.Contains(search)
+                              select s).ToList();
+                return View(result);
+
+            }
             return View(db.Item.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string a)
+        {
+            TempData["Search"] = a;
+            return RedirectToAction("Index", "Items");
         }
 
         // GET: Items/Details/5
