@@ -44,18 +44,9 @@ namespace OOpro.Controllers
         // GET: Orders/Create
         public ActionResult Create()
         {
-            ////////////////////////////////////////////////
-            Session["UserID"] = 1;
-            ////////////////////////////////////////////////
-            if (Session["UserID"] == null)
-            {
-                return RedirectToAction("Index", "Home", new { area = "" });
-            }
 
             ViewBag.ItemID = new SelectList(db.Item, "ID", "Name");
             ViewBag.UserID = new SelectList(db.User, "ID", "Account");
-
-
 
             return View();
         }
@@ -65,20 +56,42 @@ namespace OOpro.Controllers
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,ItemID,Count,Time,TotalPrice,State")] Order order)
+        public ActionResult Create(Order order)
         {
-
-
-            if (ModelState.IsValid)
+            ////////////////////////////////////////////////
+            Session["UserID"] = 1;
+            ////////////////////////////////////////////////
+            if (Session["UserID"] == null)
             {
-                db.Order.Add(order);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
-            ViewBag.ItemID = new SelectList(db.Item, "ID", "Name", order.ItemID);
-            ViewBag.UserID = new SelectList(db.User, "ID", "Account", order.UserID);
-            return View(order);
+            int user_id = Convert.ToInt32(Session["UserID"]);
+
+            var shopcart = (from s in db.Cart where (s.UserID == user_id) select s).ToList();
+
+            foreach (var i in shopcart)
+            {
+                order.Time = DateTime.Now;
+                order.Count = i.Number;
+                order.TotalPrice = i.Number * i.Item.Price;
+                order.ItemID = i.ItemID;
+                order.UserID =i.UserID;
+                order.State =0;
+
+                if (ModelState.IsValid)
+                {
+                    db.Order.Add(order);
+                    db.SaveChanges();
+
+                    Cart bye = db.Cart.Find(i.ID);
+                    db.Cart.Remove(bye);
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Index");
+
         }
 
         // GET: Orders/Edit/5
