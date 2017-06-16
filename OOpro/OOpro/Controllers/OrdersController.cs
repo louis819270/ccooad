@@ -79,10 +79,31 @@ namespace OOpro.Controllers
                 order.UserID =i.UserID;
                 order.State =0;
 
+                // 
+                var point = (from l in db.Save where (l.UserID == user_id)select l).ToList();
+                if ((order.TotalPrice - point[0].Money) >= 0)
+                    break;
+
+                var item_count = (from l in db.Item where (l.ID == order.ItemID) select l).ToList();
+                if ((order.Count - item_count[0].Count) > 0)
+                    break;
+
+
                 if (ModelState.IsValid)
                 {
                     db.Order.Add(order);
                     db.SaveChanges();
+
+
+                    Save save = db.Save.Find(point[0].ID);
+                    save.Money = save.Money - order.TotalPrice;                  
+                    db.SaveChanges();
+
+                    Item item = db.Item.Find(item_count[0].ID);
+                    item.Count = item.Count - order.Count;
+                    db.SaveChanges();
+
+
 
                     Cart bye = db.Cart.Find(i.ID);
                     db.Cart.Remove(bye);
