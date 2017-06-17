@@ -19,7 +19,7 @@ namespace OOpro.Models
         public int UserID { get; set; }
         public string Text { get; set; }
     
-        public virtual Item Item { get; set; }
         public virtual User User { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

@@ -26,10 +26,11 @@ namespace OOpro.Models
         }
     
         public virtual DbSet<Article> Article { get; set; }
-        public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<ItemRev> ItemRev { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Save> Save { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Cart> Cart { get; set; }
+        public virtual DbSet<Item> Item { get; set; }
     }
 }

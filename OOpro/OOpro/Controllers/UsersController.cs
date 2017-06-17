@@ -85,6 +85,8 @@ namespace OOpro.Controllers
             {
                 user = db.User.AsNoTracking().FirstOrDefault(a => a.Account == user.Account);
                 Session["UserID"] = user.ID;
+                Session["User"] = user.Account;
+                Session["Money"] = db.Save.AsNoTracking().FirstOrDefault(a => a.UserID == user.ID).Money;
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
             else
@@ -92,13 +94,18 @@ namespace OOpro.Controllers
 
         }
 
-        // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Logout()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            Session.Abandon();
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+        // GET: Users/Edit/5
+        public ActionResult Edit()
+        {
+
+            int id = Convert.ToInt32( Session["UserID"]);
+
             User user = db.User.Find(id);
             if (user == null)
             {
@@ -114,13 +121,16 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
         {
+            user.Account = db.User.AsNoTracking().FirstOrDefault(a => a.ID == user.ID).Account;
+            user.LV = db.User.AsNoTracking().FirstOrDefault(a => a.ID == user.ID).LV;
+            user.Picture = null;
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
-            return View(user);
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         // GET: Users/Delete/5

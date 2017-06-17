@@ -12,15 +12,12 @@ namespace OOpro.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Cart
     {
         public int ID { get; set; }
         public int UserID { get; set; }
         public int ItemID { get; set; }
-        public int Count { get; set; }
-        public System.DateTime Time { get; set; }
-        public int TotalPrice { get; set; }
-        public int State { get; set; }
+        public int Number { get; set; }
     
         public virtual User User { get; set; }
         public virtual Item Item { get; set; }

@@ -10,126 +10,114 @@ using OOpro.Models;
 
 namespace OOpro.Controllers
 {
-    public class SavesController : Controller
+    public class BonusController : Controller
     {
         private OOproDB db = new OOproDB();
 
-        // GET: Saves
+        // GET: Bonus
         public ActionResult Index()
         {
-            if (Session["userID"] == null) {
-                return RedirectToAction("Login", "Users");
-            }
-            var save = db.Save.Include(s => s.User);
-            return View(save.ToList());
+            return View(db.User.ToList());
         }
 
-        // GET: Saves/Details/5
+        // GET: Bonus/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Save save = db.Save.Find(id);
-            if (save == null)
+            User user = db.User.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(save);
+            return View(user);
         }
 
-        // GET: Saves/Create
+        // GET: Bonus/Create
         public ActionResult Create()
         {
-            ViewBag.UserID = new SelectList(db.User, "ID", "Account");
             return View();
         }
 
-        // POST: Saves/Create
+        // POST: Bonus/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,Money,Time")] Save save)
+        public ActionResult Create([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
         {
-            save.Time = DateTime.Now;
+            int[] bonus = new int[] { 1,1, 1, 1, 1,1, 1, 1,1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 50, 50, 100 };
+            Random random_number = new Random();
+            random_number.Next(0, 60);
            
+            user.Account = db.User.AsNoTracking().FirstOrDefault(a => a.ID == user.ID).Account + user.Account;
+
             if (ModelState.IsValid)
             {
-                db.Save.Add(save);
+                
+                db.User.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
-            return View(save);
+            return View(user);
         }
 
-        private void MessageBox(string v)
-        {
-            throw new NotImplementedException();
-        }
-
-        // GET: Saves/Edit/5
+        // GET: Bonus/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Save save = db.Save.Find(id);
-            if (save == null)
+            User user = db.User.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
-            return View(save);
+            return View(user);
         }
 
-        // POST: Saves/Edit/5
+        // POST: Bonus/Edit/5
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,Money,Time")] Save save)
+        public ActionResult Edit([Bind(Include = "ID,Account,Password,Phone,Email,Address,Picture,LV")] User user)
         {
-            save.Time = DateTime.Now;
-            save.Money = db.Save.AsNoTracking().FirstOrDefault(a => a.ID == save.ID).Money + save.Money;
-
             if (ModelState.IsValid)
             {
-                db.Entry(save).State = EntityState.Modified;
-
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
-            return View(save);
+            return View(user);
         }
 
-        // GET: Saves/Delete/5
+        // GET: Bonus/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Save save = db.Save.Find(id);
-            if (save == null)
+            User user = db.User.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(save);
+            return View(user);
         }
 
-        // POST: Saves/Delete/5
+        // POST: Bonus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Save save = db.Save.Find(id);
-            db.Save.Remove(save);
+            User user = db.User.Find(id);
+            db.User.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

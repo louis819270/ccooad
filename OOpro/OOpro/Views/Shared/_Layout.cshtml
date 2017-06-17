@@ -7,6 +7,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +27,7 @@
                     <li>@Html.ActionLink("輕鬆計算BMI", "bmi", "Calculate")</li>
                     <li>@Html.ActionLink("健身菜單", "Index", "Saves")</li>
                     <li>@Html.ActionLink("訓練清單", "Index", "FitnessMenu")</li>
-                    <li>@Html.ActionLink("購物車", "Index", "")</li>
+                    <li>@Html.ActionLink("購物車", "Index", "ShoppingCart")</li>
                     <li>@Html.ActionLink("點數儲值", "Index", "Saves")</li>
                     @if (Session["UserID"] == null)
                     {
@@ -35,6 +36,8 @@
                     }
                     else
                     {
+                        <li>@Html.ActionLink("剩餘點數：" + @Session["Money"], "Index", "Saves")</li>
+                        <li>@Html.ActionLink("會員專區", "Edit", "Users")</li>
                         <li>@Html.ActionLink("登出", "Logout", "Users")</li>
                     }
                 </ul>
@@ -49,7 +52,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -13,6 +13,14 @@ namespace OOpro.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string a)
+        {
+            TempData["Search"] = a;
+            return RedirectToAction("Index", "Items");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

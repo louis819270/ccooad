@@ -17,7 +17,26 @@ namespace OOpro.Controllers
         // GET: Items
         public ActionResult Index()
         {
+            if (TempData["Search"] != null)
+            {
+                string search = TempData["Search"].ToString();
+                TempData["Search"] = null;
+
+                var result = (from s in db.Item
+                              where (s.Name.Contains(search))
+                              select s).ToList();
+                return View(result);
+
+            }
             return View(db.Item.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string a)
+        {
+            TempData["Search"] = a;
+            return RedirectToAction("Index", "Items");
         }
 
         // GET: Items/Details/5
@@ -33,6 +52,30 @@ namespace OOpro.Controllers
                 return HttpNotFound();
             }
             return View(item);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(int? id, int count)
+        {
+            if (Session["UserID"] == null)
+                return RedirectToAction("Login", "Users", new { area = "" });
+            int ItemID = Convert.ToInt32(id);
+            int UserID = Convert.ToInt32(Session["UserID"]);
+            if (db.Cart.AsNoTracking().FirstOrDefault(a => a.ItemID == ItemID && a.UserID == UserID) != null)
+            {
+                TempData["message"] = "已存在購物車";
+                return RedirectToAction("Index", "Items", new { area = "" });
+            }
+            if (count > db.Item.AsNoTracking().FirstOrDefault(a => a.ID == id).Count)
+            {
+                TempData["message"] = "庫存不足";
+                return RedirectToAction("Index", "Items", new { area = "" });
+            }
+            TempData["ItemID"] = ItemID;
+            TempData["count"] = count;
+            TempData["UserID"] = UserID;
+            return RedirectToAction("Create", "ShoppingCart", new { area = "" });
         }
 
         // GET: Items/Create
