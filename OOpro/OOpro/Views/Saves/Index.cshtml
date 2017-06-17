@@ -1,25 +1,21 @@
 ﻿@model IEnumerable<OOpro.Models.Save>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "儲值";
 }
 
-<h2>Index</h2>
+<h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> 儲值</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Money)
+            @Html.DisplayName("餘額")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+           @Html.DisplayName("最新儲值時間")
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Account)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -31,13 +27,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Time)
         </td>
+        
+      
         <td>
-            @Html.DisplayFor(modelItem => item.User.Account)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("加值", "Edit", new { id=item.ID })           
+            
         </td>
     </tr>
 }

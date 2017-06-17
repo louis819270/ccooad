@@ -58,9 +58,7 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Order order)
         {
-            ////////////////////////////////////////////////
-            Session["UserID"] = 1;
-            ////////////////////////////////////////////////
+
             if (Session["UserID"] == null)
             {
                 return RedirectToAction("Index", "Home", new { area = "" });
@@ -76,17 +74,24 @@ namespace OOpro.Controllers
                 order.Count = i.Number;
                 order.TotalPrice = i.Number * i.Item.Price;
                 order.ItemID = i.ItemID;
-                order.UserID =i.UserID;
-                order.State =0;
+                order.UserID = i.UserID;
+                order.State = 0;
 
                 // 
-                var point = (from l in db.Save where (l.UserID == user_id)select l).ToList();
+                var point = (from l in db.Save where (l.UserID == user_id) select l).ToList();
                 if ((order.TotalPrice - point[0].Money) >= 0)
-                    break;
+                {
+                    TempData["message"] = "餘額不足";
+                    return RedirectToAction("Index", "ShoppingCart", new { area = "" }); ;
+                }
 
                 var item_count = (from l in db.Item where (l.ID == order.ItemID) select l).ToList();
                 if ((order.Count - item_count[0].Count) > 0)
-                    break;
+                {
+                    TempData["message"] = "庫存不足";
+                    return RedirectToAction("Index", "ShoppingCart", new { area = "" }); ;
+                }
+
 
 
                 if (ModelState.IsValid)
@@ -96,7 +101,7 @@ namespace OOpro.Controllers
 
 
                     Save save = db.Save.Find(point[0].ID);
-                    save.Money = save.Money - order.TotalPrice;                  
+                    save.Money = save.Money - order.TotalPrice;
                     db.SaveChanges();
 
                     Item item = db.Item.Find(item_count[0].ID);

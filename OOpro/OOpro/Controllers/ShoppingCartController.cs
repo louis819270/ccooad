@@ -17,9 +17,7 @@ namespace OOpro.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            ////////////////////////////////////////////////
-            Session["UserID"] = 1;
-            ////////////////////////////////////////////////
+           
             if (Session["UserID"] == null)
             {
                 return RedirectToAction("Login", "Users", new { area = "" });
