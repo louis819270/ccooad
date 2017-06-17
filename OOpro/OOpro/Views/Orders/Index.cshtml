@@ -1,32 +1,35 @@
 ﻿@model IEnumerable<OOpro.Models.Order>
 
 @{
-    ViewBag.Title = "消費紀錄";
+
+    ViewBag.Title = "訂單管理";
 }
 
-<h2>消費紀錄</h2>
+<h2>訂單管理</h2>
+
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("商品名稱")
+            數量
         </th>
         <th>
-            @Html.DisplayName("商品數量" )
+           時間
         </th>
         <th>
-            @Html.DisplayName("總金額")
+           總價格
         </th>
         <th>
-            @Html.DisplayName("購買日期")
+           評論
         </th>
-
-       
-    
+        <th>
+            商品名稱
+        </th>
+     
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderByDescending(model => model.Time))
     {
         <tr>
             <td>
@@ -38,13 +41,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TotalPrice)
             </td>
+
+            @if (item.State == 0)
+            {
+
+                <th>未評論商品</th>
+            }
+            else
+            {
+                <th>已評論商品</th>
+            }
+
             <td>
-                @Html.DisplayFor(modelItem => item.Time)
+                @Html.DisplayFor(modelItem => item.Item.Name)
             </td>
             
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             </td>
         </tr>

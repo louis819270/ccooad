@@ -37,6 +37,7 @@
                     else
                     {
                         <li>@Html.ActionLink("剩餘點數：" + @Session["Money"], "Index", "Saves")</li>
+                        <li>@Html.ActionLink("訂單管理", "Index", "Orders")</li>
                         <li>@Html.ActionLink("會員專區", "Edit", "Users")</li>
                         <li>@Html.ActionLink("登出", "Logout", "Users")</li>
                     }

@@ -21,9 +21,15 @@ namespace OOpro.Controllers
             {
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
+            int userid = Convert.ToInt32(Session["UserID"].ToString());
 
             var order = db.Order.Include(o => o.Item).Include(o => o.User);
-            return View(order.ToList());
+            var list = (from abc in order
+                        where abc.User.ID == userid
+                        select abc).ToList();
+
+
+            return View(list);
         }
 
         // GET: Orders/Details/5
@@ -177,6 +183,17 @@ namespace OOpro.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Order order = db.Order.Find(id);
+            int userid = Convert.ToInt32(Session["UserID"].ToString());
+
+            if (ModelState.IsValid)
+            {
+                Save save = db.Save.AsNoTracking().FirstOrDefault(a => a.UserID == userid);
+                save.Money = save.Money + order.TotalPrice;
+                db.Entry(save).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+
             db.Order.Remove(order);
             db.SaveChanges();
             return RedirectToAction("Index");
