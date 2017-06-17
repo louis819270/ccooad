@@ -20,7 +20,20 @@ namespace OOpro.Controllers
             if (TempData["Search"] != null)
             {
                 string search = TempData["Search"].ToString();
+                string Type = TempData["Type"].ToString();
                 TempData["Search"] = null;
+                if (Type != "1")
+                {
+                    var result1 = (from s in db.Item
+                                   where (s.Type == Type)
+                                   select s);
+
+                    var result2 = (from s in result1
+                                   where (s.Name.Contains(search))
+                                   select s).ToList();
+
+                    return View(result2);
+                }
 
                 var result = (from s in db.Item
                               where (s.Name.Contains(search))

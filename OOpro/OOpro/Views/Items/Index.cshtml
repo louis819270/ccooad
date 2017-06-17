@@ -37,32 +37,34 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(@Html.DisplayFor(modelItem => item.Name).ToString(), "Details", new { id = item.ID })
-            
-        </td>
-        <td>
-            <img src="~/picture/@item.Picture" class="img-responsive" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @if (item.Count > 0)
-            {
-                <a href='@Url.Action("Details", "Items", new { id = item.ID })'>
-                    <img src="~/picture/hot.jpg" class="img-responsive" />
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@Html.DisplayFor(modelItem => item.Name).ToString(), "Details", new { id = item.ID })
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.ID })">
+                    <img src="~/picture/@item.Picture" class="img-responsive" style="max-width:200px" />
                 </a>
-                
-            }
-            else
-            {
-                <img src="~/picture/sold.jpg" class="img-responsive" />
-            }
-        </td>
-    </tr>
-}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @if (item.Count > 0)
+                {
+                    <a href='@Url.Action("Details", "Items", new { id = item.ID })'>
+                        <img src="~/picture/hot.jpg" class="img-responsive" style="max-width:100px" />
+                    </a>
+
+                }
+                else
+                {
+                    <img src="~/picture/sold.jpg" class="img-responsive" style="max-width:100px" />
+                }
+            </td>
+        </tr>
+    }
 
 </table>

@@ -15,9 +15,10 @@ namespace OOpro.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(string a)
+        public ActionResult Index(string a, int btnn)
         {
             TempData["Search"] = a;
+            TempData["Type"] = btnn;
             return RedirectToAction("Index", "Items");
         }
 
