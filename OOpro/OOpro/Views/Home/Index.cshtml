@@ -2,37 +2,73 @@
     ViewBag.Title = "首頁";
 }
 
-<div class="text-center">
-    <p></p>
-
-    <p></p>
+<div>
+    <br />
+    <p><img src="~/picture/0.jpg" class="img-responsive" style="display:block; margin:auto;" /></p>
 </div>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="text-right">
-        @Html.TextBox("a", null, new { @class = "btn-info" })
-        <input type="submit" value="搜尋" class="btn btn-default" />
+
+
+<div class="text-center">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default" value="1">全部商品</button>
+        <button type="button" class="btn btn-default" value="2">健身器材</button>
+        <button type="button" class="btn btn-default" value="3">重量訓練</button>
+        <button type="button" class="btn btn-default" value="4">伸展運動</button>
+        <button type="button" class="btn btn-default" value="5">營養品</button>
+        <button type="button" class="btn btn-default" value="6">運動衣物</button>
     </div>
-}
+    <br />
+    <div style="display:block; margin:auto;">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.TextBox("a", null, new { @class = "btn-info" })
+            <input type="submit" value="搜尋" class="btn btn-default" />
+            <input type="hidden" name="btnn" value="1" />
+            <script>
+                $("button").click(function (event) {
+                    $("input[name=btnn]").val(this.value);
+
+                    console.log($("input[name=btnn]"));
+                });
+            </script>
+        }
+    </div>
+    <hr />
+    <div class="text-center">
+        <a href="@Url.Action("Index","Item")">點我進入商場</a>
+    </div>
+    <hr />
+</div>
+
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+    <div class="col-lg-12">
+        <h3 class="page-header">★↖熱門產品↘☆</h3>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <div class="col-sm-3 col-xs-6">
+        <a href="~/Items/Details/1">
+            <img src="~/picture/1.jpg" class="img-responsive" />
+        </a>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    <div class="col-sm-3 col-xs-6">
+        <a href="~/Items/Details/3">
+            <img src="~/picture/2.jpg" class="img-responsive" />
+        </a>
     </div>
+
+    <div class="col-sm-3 col-xs-6">
+        <a href="~/Items/Details/5">
+            <img src="~/picture/3.jpg" class="img-responsive" />
+        </a>
+    </div>
+
+    <div class="col-sm-3 col-xs-6">
+        <a href="~/Items/Details/8">
+            <img src="~/picture/4.jpg" class="img-responsive" />
+        </a>
+    </div>
+
 </div>
