@@ -60,7 +60,7 @@ namespace OOpro.Controllers
             {
                 db.Cart.Add(cart);
                 db.SaveChanges();
-                TempData["message"] = "庫存不足";
+                TempData["message"] = "已加入購物車";
                 return RedirectToAction("Index", "Items", new { area = "" });
             }
 

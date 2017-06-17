@@ -18,78 +18,76 @@
                 <span class="glyphicon glyphicon-align-justify glyphicon" aria-hidden="true"></span>
                 文章列表
             </h1>
-            @if (Session["UserID"]!=null) { 
-            <p>
-                @Html.ActionLink("Create New", "Create")
-            </p>
+            @if (Session["UserID"] != null)
+            {
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
             }
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-8">
-                        <table class="table">
-                            <caption> 最新文章</caption>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table">
+                        <caption> 最新文章</caption>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Title)</th>
+                            <th>@Html.DisplayNameFor(model => model.User.Account)</th>
+                            <th>@Html.DisplayNameFor(model => model.ClickRate)</th>
+                            <th>@Html.DisplayNameFor(model => model.Time)</th>
+                        </tr>
+                        @foreach (var item in Model.OrderBy(item => item.Time))
+                        {
                             <tr>
-                                <th>@Html.DisplayNameFor(model => model.Title)</th>
-                                <th>@Html.DisplayNameFor(model => model.User.Account)</th>
-                                <th>@Html.DisplayNameFor(model => model.ClickRate)</th>
-                                <th>@Html.DisplayNameFor(model => model.Time)</th>
+                                <td>
+                                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Title).ToString(), "Details", new { id = item.ID })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Account)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClickRate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Time)
+                                </td>
+                                @if (Session["UserID"] != null && item.UserID == (int)Session["UserID"])
+                                {
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                    </td>
+                                }
                             </tr>
-                            @foreach (var item in Model.OrderBy(item=>item.Time))
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink(@Html.DisplayFor(modelItem => item.Title).ToString(), "Details", new { id = item.ID })
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.User.Account)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ClickRate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Time)
-                                    </td>
-                                    @if (Session["UserID"] != null && item.UserID == (int)Session["UserID"])
-                                    {
-                                        <td>
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                                        </td>
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <table class="table">
-                            <caption> 熱門文章</caption>
+                        }
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <table class="table">
+                        <caption> 熱門文章</caption>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Title)</th>
+                            <th>@Html.DisplayNameFor(model => model.ClickRate)</th>
+                        </tr>
+                        @foreach (var item in Model.OrderByDescending(item => item.ClickRate))
+                        {
                             <tr>
-                                <th>@Html.DisplayNameFor(model => model.Title)</th>
-                                <th>@Html.DisplayNameFor(model => model.ClickRate)</th>
+                                <td>
+                                    @Html.ActionLink(@Html.DisplayFor(modelItem => item.Title).ToString(), "Details", new { id = item.ID })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClickRate)
+                                </td>
                             </tr>
-                            @foreach (var item in Model.OrderByDescending(item => item.ClickRate))
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink(@Html.DisplayFor(modelItem => item.Title).ToString(), "Details", new { id = item.ID })
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ClickRate)
-                                    </td>
-                                </tr>
-                            }
-                        </table>
-                    </div>
+                        }
+                    </table>
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 
 

@@ -48,12 +48,36 @@
                         </div>
                     </div>
 
-                    
+
                 </form>
             }
             <p>
             <p>
             </p>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <caption>評論</caption>
+                <tr>
+                    <th>評論者</th>
+                    <th>評論內容</th>
+                </tr>
+                @foreach (var item in Model.ItemRev)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.Account)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Text)
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
     </div>
     <p>
