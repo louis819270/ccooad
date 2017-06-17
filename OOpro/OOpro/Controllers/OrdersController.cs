@@ -111,6 +111,7 @@ namespace OOpro.Controllers
                 }
             }
 
+            Session["Money"] = db.Save.AsNoTracking().FirstOrDefault(a => a.UserID == user_id).Money;
             return RedirectToAction("Index");
 
         }
