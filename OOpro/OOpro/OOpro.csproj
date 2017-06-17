@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BonusController.cs" />
     <Compile Include="Controllers\CalculateController.cs" />
+    <Compile Include="Controllers\FitnessMenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -290,6 +291,7 @@
     <Content Include="Views\ShoppingCart\Details.cshtml" />
     <Content Include="Views\ShoppingCart\Edit.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\FitnessMenu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
