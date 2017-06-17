@@ -21,9 +21,15 @@ namespace OOpro.Controllers
             {
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
+            int userid = Convert.ToInt32(Session["UserID"].ToString());
 
             var order = db.Order.Include(o => o.Item).Include(o => o.User);
-            return View(order.ToList());
+            var list = (from abc in order
+                        where abc.User.ID == userid
+                        select abc).ToList();
+
+
+            return View(list);
         }
 
         // GET: Orders/Details/5
@@ -76,11 +82,11 @@ namespace OOpro.Controllers
                 order.Count = i.Number;
                 order.TotalPrice = i.Number * i.Item.Price;
                 order.ItemID = i.ItemID;
-                order.UserID =i.UserID;
-                order.State =0;
+                order.UserID = i.UserID;
+                order.State = 0;
 
                 // 
-                var point = (from l in db.Save where (l.UserID == user_id)select l).ToList();
+                var point = (from l in db.Save where (l.UserID == user_id) select l).ToList();
                 if ((order.TotalPrice - point[0].Money) >= 0)
                     break;
 
@@ -96,7 +102,7 @@ namespace OOpro.Controllers
 
 
                     Save save = db.Save.Find(point[0].ID);
-                    save.Money = save.Money - order.TotalPrice;                  
+                    save.Money = save.Money - order.TotalPrice;
                     db.SaveChanges();
 
                     Item item = db.Item.Find(item_count[0].ID);
@@ -172,6 +178,17 @@ namespace OOpro.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Order order = db.Order.Find(id);
+            int userid = Convert.ToInt32(Session["UserID"].ToString());
+
+            if (ModelState.IsValid)
+            {
+                Save save = db.Save.AsNoTracking().FirstOrDefault(a => a.UserID == userid);
+                save.Money = save.Money + order.TotalPrice;
+                db.Entry(save).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+
             db.Order.Remove(order);
             db.SaveChanges();
             return RedirectToAction("Index");

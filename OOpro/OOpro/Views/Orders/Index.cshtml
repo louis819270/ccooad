@@ -1,38 +1,33 @@
 ﻿@model IEnumerable<OOpro.Models.Order>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "訂單管理";
 }
 
-<h2>Index</h2>
+<h2>訂單管理</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Count)
+            數量
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+           時間
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TotalPrice)
+           總價格
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.State)
+           評論
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Item.Name)
+            商品名稱
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Account)
-        </th>
+     
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderByDescending(model => model.Time))
     {
         <tr>
             <td>
@@ -44,18 +39,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TotalPrice)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
+
+            @if (item.State == 0)
+            {
+
+                <th>未評論商品</th>
+            }
+            else
+            {
+                <th>已評論商品</th>
+            }
+
             <td>
                 @Html.DisplayFor(modelItem => item.Item.Name)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.User.Account)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             </td>
         </tr>
