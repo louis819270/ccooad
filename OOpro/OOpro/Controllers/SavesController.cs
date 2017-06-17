@@ -20,7 +20,8 @@ namespace OOpro.Controllers
             if (Session["userID"] == null) {
                 return RedirectToAction("Login", "Users");
             }
-            var save = db.Save.Include(s => s.User);
+            int user_id = Convert.ToInt32(Session["UserID"]);
+            var save = (from s in db.Save where (s.UserID == user_id) select s);
             return View(save.ToList());
         }
 
@@ -42,6 +43,12 @@ namespace OOpro.Controllers
         // GET: Saves/Create
         public ActionResult Create()
         {
+            int user_id = Convert.ToInt32(Session["UserID"]);
+            var save_state = (from l in db.Save where (l.UserID == user_id) select l).ToList();
+            if (save_state[0].Money != 0) {
+                return RedirectToAction("Index");
+            }
+                
             ViewBag.UserID = new SelectList(db.User, "ID", "Account");
             return View();
         }
@@ -57,6 +64,7 @@ namespace OOpro.Controllers
            
             if (ModelState.IsValid)
             {
+                save.Money = 1;
                 db.Save.Add(save);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -84,6 +92,11 @@ namespace OOpro.Controllers
                 return HttpNotFound();
             }
             ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
+
+
+           
+
+
             return View(save);
         }
 
@@ -94,7 +107,9 @@ namespace OOpro.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,UserID,Money,Time")] Save save)
         {
+            int user_id = Convert.ToInt32(Session["UserID"]);
             save.Time = DateTime.Now;
+            save.UserID = db.Save.AsNoTracking().FirstOrDefault(a => a.UserID == user_id).UserID;
             save.Money = db.Save.AsNoTracking().FirstOrDefault(a => a.ID == save.ID).Money + save.Money;
 
             if (ModelState.IsValid)
@@ -102,9 +117,12 @@ namespace OOpro.Controllers
                 db.Entry(save).State = EntityState.Modified;
 
                 db.SaveChanges();
+                Session["Money"] = db.Save.AsNoTracking().FirstOrDefault(a => a.UserID == user_id).Money;
                 return RedirectToAction("Index");
             }
             ViewBag.UserID = new SelectList(db.User, "ID", "Account", save.UserID);
+
+
             return View(save);
         }
 

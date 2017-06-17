@@ -51,8 +51,20 @@ namespace OOpro.Controllers
             user.LV = 0;
             if (ModelState.IsValid)
             {
+
                 db.User.Add(user);
                 db.SaveChanges();
+
+
+                Save save = new Save();
+                save.Money = 0;
+                save.UserID = user.ID;
+                save.Time = DateTime.Now;
+
+                db.Save.Add(save);
+                db.SaveChanges();
+
+
                 return RedirectToAction("Index");
             }
 
